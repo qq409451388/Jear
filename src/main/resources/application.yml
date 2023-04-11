@@ -1,0 +1,24 @@
+server:
+  port: 8002
+
+SwMemCache:
+  ip: 127.0.0.1
+  port: 6379
+rabbitmq:
+  userName: guest
+  password: guest
+  virtualHost: core
+  hostName: 127.0.0.1
+  port: 5672
+  connectionMaxNum: 3
+
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3006/xx?characterEncoding=utf8&serverTimezone=Asia/Shanghai&allowMultiQueries=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    initialSize: 5
+    maxActive: 20
+    maxWait: 2000
