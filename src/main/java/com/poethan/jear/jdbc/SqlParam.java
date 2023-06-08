@@ -1,4 +1,4 @@
-package com.poethan.jdbc;
+package com.poethan.jear.jdbc;
 
 import java.util.HashMap;
 import java.util.Map;

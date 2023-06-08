@@ -1,4 +1,4 @@
-package com.poethan.dto;
+package com.poethan.jear.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

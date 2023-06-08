@@ -1,4 +1,4 @@
-package com.poethan.dto;
+package com.poethan.jear.dto;
 
 
 import lombok.Getter;

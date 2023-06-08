@@ -1,7 +1,7 @@
-package com.poethan.jdbc;
+package com.poethan.jear.jdbc;
 
 
-import com.poethan.utils.EzDate;
+import com.poethan.jear.utils.EzDate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.jdbc.IncorrectResultSetColumnCountException;

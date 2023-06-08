@@ -3,7 +3,7 @@
 // (powered by FernFlower decompiler)
 //
 
-package com.poethan.jdbc;
+package com.poethan.jear.jdbc;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
@@ -17,7 +17,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import com.poethan.utils.EzDate;
+import com.poethan.jear.utils.EzDate;
 import lombok.SneakyThrows;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
