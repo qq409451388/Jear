@@ -4,9 +4,7 @@ import com.alibaba.druid.util.JdbcUtils;
 import com.poethan.utils.EzDataUtils;
 import com.poethan.jear.utils.EzDate;
 import com.poethan.jear.utils.JsonUtils;
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
-import com.sun.xml.internal.ws.spi.db.DatabindingException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -25,11 +23,11 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Component
 public class JdbcDAO {
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    private final static Logger log = LoggerFactory.getLogger(JdbcDAO.class);
 
     public <D extends BaseDO<ID>, ID> List<D> findByIds(Class<D> tClass, List<ID> ids) {
         Table annotation = tClass.getAnnotation(Table.class);
@@ -103,7 +101,7 @@ public class JdbcDAO {
                 } else if (EzDataUtils.isScalar(entry.getValue())) {
                     whereSql = whereSql.replaceAll(":" + entry.getKey() + " ", entry.getValue() + " ");
                 } else {
-                    throw new DatabindingException();
+                    throw new EmptyResultDataAccessException(0);
                 }
             }
             String tableName = tClass.getAnnotation(Table.class).name();

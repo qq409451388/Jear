@@ -1,7 +1,6 @@
 package com.poethan.jear.module.rabbitmq;
 
 import com.rabbitmq.client.*;
-import javafx.util.Callback;
 
 import java.io.IOException;
 import java.util.function.Function;

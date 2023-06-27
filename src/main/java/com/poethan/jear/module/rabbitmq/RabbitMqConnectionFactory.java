@@ -7,16 +7,12 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
 @Slf4j
-@Component
 public class RabbitMqConnectionFactory {
     @Value("${rabbitmq.userName}")
     private String userName;
@@ -42,7 +38,6 @@ public class RabbitMqConnectionFactory {
 
     private final List<Receiver> receiverList = new ArrayList<>();
 
-    @PostConstruct
     public void init() throws IOException, TimeoutException {
         this.initConnection();
     }

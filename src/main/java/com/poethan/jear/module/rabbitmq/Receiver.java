@@ -2,7 +2,6 @@ package com.poethan.jear.module.rabbitmq;
 
 import com.rabbitmq.client.BuiltinExchangeType;
 import com.rabbitmq.client.Consumer;
-import javafx.util.Callback;
 import lombok.Data;
 
 import java.io.Serializable;

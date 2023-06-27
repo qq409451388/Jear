@@ -1,13 +1,11 @@
 package com.poethan.jear.module.cache;
 
 import com.poethan.jear.utils.SystemUtils;
-import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Component
 public class EzLocalCache extends EzCache {
     private final static ConcurrentHashMap<String, EzLocalCacheObject> data = new ConcurrentHashMap<>();
     private final static String EXCEPTION_PREFIX = "[EzLocalCache Exception] ";
