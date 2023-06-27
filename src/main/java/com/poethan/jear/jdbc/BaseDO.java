@@ -18,9 +18,9 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @JsonIgnoreProperties
-abstract public class BaseDO<T> implements Serializable {
-    @Column(name = "id")
-    private T id;
+abstract public class BaseDO<T> extends AbstractDO<T> implements Serializable {
+    @Column(name = "ver")
+    private Integer ver;
 
     @JsonSerialize(using = EzDateSerializer.class)
     @JsonDeserialize(using = EzDateDeserializer.class)
@@ -31,6 +31,10 @@ abstract public class BaseDO<T> implements Serializable {
     @JsonDeserialize(using = EzDateDeserializer.class)
     @Column(name = "update_time")
     private EzDate updateTime;
+
+    public BaseDO() {
+        this.ver = 1;
+    }
 
     public void setCreateTime(Integer timeStamp) {
         this.createTime = new EzDate(timeStamp);

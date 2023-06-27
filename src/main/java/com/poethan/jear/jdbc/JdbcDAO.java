@@ -1,22 +1,16 @@
 package com.poethan.jear.jdbc;
 
-import com.alibaba.druid.util.JdbcUtils;
-import com.poethan.utils.EzDataUtils;
+import com.poethan.jear.utils.EzDataUtils;
 import com.poethan.jear.utils.EzDate;
-import com.poethan.jear.utils.JsonUtils;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.Column;
 import javax.persistence.Table;
-import javax.sql.DataSource;
 import java.lang.reflect.Field;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -24,9 +18,9 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
-@Component
+@Repository
 public class JdbcDAO {
-    @Autowired
+    @Resource
     private JdbcTemplate jdbcTemplate;
 
     public <D extends BaseDO<ID>, ID> List<D> findByIds(Class<D> tClass, List<ID> ids) {
@@ -39,7 +33,7 @@ public class JdbcDAO {
         return this.findListByCondition(tClass, "where id in ( :ids )", SqlParam.create("ids", ids));
     }
 
-    public <D extends BaseDO<ID>, ID> D findById(Class<D> tClass, ID id) {
+    public <D extends AbstractDO<ID>, ID> D findById(Class<D> tClass, ID id) {
         Table annotation = tClass.getAnnotation(Table.class);
         String table = annotation.name();
 
@@ -47,8 +41,10 @@ public class JdbcDAO {
             try {
                 D domain = tClass.newInstance();
                 domain.setId(id);
-                domain.setCreateTime(new EzDate(rs.getInt("create_time")));
-                domain.setUpdateTime(new EzDate(rs.getInt("update_time")));
+                if (domain instanceof BaseDO) {
+                    ((BaseDO)domain).setCreateTime(new EzDate(rs.getInt("create_time")));
+                    ((BaseDO)domain).setUpdateTime(new EzDate(rs.getInt("update_time")));
+                }
                 Field[] fields = domain.getClass().getDeclaredFields();
                 for (Field field : fields) {
                     Column column = field.getAnnotation(Column.class);
