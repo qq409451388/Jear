@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.Column;
 import javax.persistence.Table;
 import java.lang.reflect.Field;
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -42,8 +43,8 @@ public class JdbcDAO {
                 D domain = tClass.newInstance();
                 domain.setId(id);
                 if (domain instanceof BaseDO) {
-                    ((BaseDO)domain).setCreateTime(new EzDate(rs.getInt("create_time")));
-                    ((BaseDO)domain).setUpdateTime(new EzDate(rs.getInt("update_time")));
+                    ((BaseDO<ID>)domain).setCreateTime(new EzDate(rs.getTimestamp("create_time").toLocalDateTime()));
+                    ((BaseDO<ID>)domain).setUpdateTime(new EzDate(rs.getTimestamp("update_time").toLocalDateTime()));
                 }
                 Field[] fields = domain.getClass().getDeclaredFields();
                 for (Field field : fields) {

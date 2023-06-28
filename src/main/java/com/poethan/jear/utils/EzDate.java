@@ -31,12 +31,12 @@ public class EzDate {
     }
 
     public EzDate(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
         if (null == localDateTime) {
             this.dateTimeString = ZERO_TIME;
         } else {
             this.dateTimeString = this.toString();
         }
-        this.localDateTime = localDateTime;
     }
 
     public int getYear() {

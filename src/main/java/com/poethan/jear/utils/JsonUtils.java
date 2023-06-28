@@ -2,12 +2,16 @@ package com.poethan.jear.utils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.logging.log4j.util.Strings;
 
 import java.util.List;
 import java.util.Map;
 
 public class JsonUtils {
     public static <T> T decode(String json, Class<T> tClass){
+        if (Strings.isBlank(json)) {
+            return null;
+        }
         try{
             ObjectMapper objectMapper = new ObjectMapper();
             return objectMapper.readValue(json, tClass);
