@@ -9,6 +9,8 @@ import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.net.InetSocketAddress;
+
 @Slf4j
 abstract public class SocketHandler<T> extends ChannelInboundHandlerAdapter {
     public static final ChannelGroup clients = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
