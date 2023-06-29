@@ -10,6 +10,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -33,7 +34,7 @@ import org.springframework.util.StringUtils;
 
 import javax.persistence.Column;
 
-public class NamedPropertyRowMapper<T extends BaseDO<ID>, ID> implements RowMapper<T> {
+public class NamedPropertyRowMapper<T extends AbstractDO<ID>, ID> implements RowMapper<T> {
     protected final Log logger = LogFactory.getLog(this.getClass());
     private Class<T> mappedClass;
 
@@ -155,13 +156,22 @@ public class NamedPropertyRowMapper<T extends BaseDO<ID>, ID> implements RowMapp
         T mappedObject = BeanUtils.instantiateClass(this.mappedClass);
         Object ID =  rs.getObject("id");
         this.assignId(mappedObject, ID);
-        if (rs.getObject("create_time") instanceof Integer) {
-            int timpStamp = (Integer) rs.getObject("create_time");
-            mappedObject.setCreateTime(new EzDate(timpStamp));
-        }
-        if (rs.getObject("update_time") instanceof Integer) {
-            int timpStamp = (Integer) rs.getObject("update_time");
-            mappedObject.setUpdateTime(new EzDate(timpStamp));
+        if (mappedObject instanceof BaseDO) {
+            ((BaseDO)mappedObject).setVer(rs.getInt("ver"));
+            if (rs.getObject("create_time") instanceof Integer) {
+                int timpStamp = (Integer) rs.getObject("create_time");
+                ((BaseDO)mappedObject).setCreateTime(new EzDate(timpStamp));
+            } else if (rs.getObject("create_time") instanceof Timestamp) {
+                Timestamp timestamp = (Timestamp) rs.getObject("create_time");
+                ((BaseDO)mappedObject).setCreateTime(new EzDate(timestamp.toLocalDateTime()));
+            }
+            if (rs.getObject("update_time") instanceof Integer) {
+                int timpStamp = (Integer) rs.getObject("update_time");
+                ((BaseDO)mappedObject).setUpdateTime(new EzDate(timpStamp));
+            } else if (rs.getObject("update_time") instanceof Timestamp) {
+                Timestamp timestamp = (Timestamp) rs.getObject("update_time");
+                ((BaseDO)mappedObject).setUpdateTime(new EzDate(timestamp.toLocalDateTime()));
+            }
         }
         try{
             Field[] fields = mappedClass.getDeclaredFields();
@@ -188,7 +198,12 @@ public class NamedPropertyRowMapper<T extends BaseDO<ID>, ID> implements RowMapp
     private void assignId(T mappedObject, Object ID) {
         ParameterizedType type = (ParameterizedType)mappedObject.getClass().getGenericSuperclass();
         String idType = type.getActualTypeArguments()[0].getTypeName();
-        Field field = mappedObject.getClass().getSuperclass().getDeclaredField("id");
+        Field field;
+        if (mappedObject instanceof BaseDO) {
+            field = mappedObject.getClass().getSuperclass().getSuperclass().getDeclaredField("id");
+        } else {
+            field = mappedObject.getClass().getSuperclass().getDeclaredField("id");
+        }
         field.setAccessible(true);
         if(Long.class.getName().equals(idType)) {
             field.set(mappedObject, (Long.parseLong(ID.toString())));

@@ -1,16 +1,23 @@
 package com.poethan.jear.jdbc;
 
+import com.poethan.jear.module.cache.EzRedis;
+import com.poethan.jear.utils.JsonUtils;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Repository;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Objects;
 
 @Repository
 abstract public class BaseDAO<ID, D extends AbstractDO<ID>> {
     @Resource
     private JdbcDAO jdbcDAO;
+    @Resource
+    private EzRedis redis;
+
     private Class<D> domainClass;
+    private Class<ID> domainIdClass;
 
     public BaseDAO() {
         Type superClass = getClass().getGenericSuperclass();
@@ -27,12 +34,35 @@ abstract public class BaseDAO<ID, D extends AbstractDO<ID>> {
                 // 判断类型是否为Class类型
                 if (entityType instanceof Class) {
                     domainClass = (Class<D>) entityType;
+                    domainIdClass = (Class<ID>) entityIdType;
                 }
             }
         }
     }
 
     public D findById(ID id) {
-        return this.jdbcDAO.findById(domainClass, id);
+        D domain = JsonUtils.decode(redis.get(getDomainCacheKey(id)), domainClass);
+        if (Objects.nonNull(domain)) {
+            return domain;
+        }
+        domain = this.jdbcDAO.findById(domainClass, id);
+        redis.setEx(getDomainCacheKey(id), JsonUtils.encode(domain), 86400);
+        return domain;
+    }
+
+    public boolean update(D domain) {
+        boolean updateRes = this.jdbcDAO.update(domain);
+        if (updateRes) {
+            this.redis.del(getDomainCacheKey(domain.getId()));
+        }
+        return updateRes;
+    }
+
+    public boolean save(D domain) {
+        return this.jdbcDAO.save(domain);
+    }
+
+    private String getDomainCacheKey(ID id) {
+        return this.domainClass.getSimpleName()+"::"+id;
     }
 }

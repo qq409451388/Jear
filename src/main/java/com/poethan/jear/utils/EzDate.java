@@ -1,14 +1,25 @@
 package com.poethan.jear.utils;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
-public class EzDate {
+//@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+public class EzDate implements Serializable {
     public final static String ZERO_TIME = "0000-00-00 00:00:00";
-
+    private final static String FORMAT = "yyyy-MM-dd HH:mm:ss";
     private LocalDateTime localDateTime;
     private String dateTimeString;
+
+    public static EzDate now() {
+        return new EzDate(LocalDateTime.now());
+    }
+    public static EzDate empty() {
+        return new EzDate(0);
+    }
 
     public EzDate(int timeStamp){
         if (0 == timeStamp) {
@@ -37,6 +48,11 @@ public class EzDate {
         } else {
             this.dateTimeString = this.toString();
         }
+    }
+
+    public EzDate(String dateTimeString) {
+        this.localDateTime = LocalDateTime.parse(dateTimeString, DateTimeFormatter.ofPattern(FORMAT));
+        this.dateTimeString = dateTimeString;
     }
 
     public int getYear() {

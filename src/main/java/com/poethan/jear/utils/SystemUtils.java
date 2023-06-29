@@ -30,6 +30,10 @@ public class SystemUtils {
         return (int) System.currentTimeMillis()/1000;
     }
 
+    public static long currentTimeStampMillis() {
+        return System.currentTimeMillis();
+    }
+
     public static void startTimeKeeping(){
         getTimmer().start();
     }

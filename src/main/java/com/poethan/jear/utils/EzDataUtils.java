@@ -55,4 +55,16 @@ public class EzDataUtils {
             return (T) o;
         }
     }
+
+    public static boolean isNumberValue(Object v) {
+        if (Objects.isNull(v)) {
+            return false;
+        }
+        try {
+            Long.parseLong(v.toString());
+            return true;
+        }catch (NumberFormatException nfe) {
+            return false;
+        }
+    }
 }

@@ -2,6 +2,7 @@ package com.poethan.jear.utils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.poethan.jear.jdbc.AbstractDO;
 import org.apache.logging.log4j.util.Strings;
 
 import java.util.List;
@@ -13,9 +14,15 @@ public class JsonUtils {
             return null;
         }
         try{
-            ObjectMapper objectMapper = new ObjectMapper();
+            ObjectMapper objectMapper;
+            if (tClass.isAssignableFrom(AbstractDO.class)) {
+                objectMapper = new DomainMapper();
+            } else {
+                objectMapper = new ObjectMapper();
+            }
             return objectMapper.readValue(json, tClass);
         }catch(Exception e){
+            e.printStackTrace();
             return null;
         }
     }
