@@ -22,4 +22,14 @@ public class EzRpcResponse extends BaseVO {
         o.data = data;
         return o;
     }
+
+    public static EzRpcResponse ERROR (int code, String msg) {
+        EzRpcResponse o = new EzRpcResponse();
+        o.code = code;
+        o.msg = msg;
+        return o;
+    }
+    public static EzRpcResponse ERROR (int code) {
+        return EzRpcResponse.ERROR(code, "ERROR");
+    }
 }

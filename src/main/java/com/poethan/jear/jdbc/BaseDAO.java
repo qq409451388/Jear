@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.List;
 import java.util.Objects;
 
 @Repository
@@ -64,5 +65,9 @@ abstract public class BaseDAO<ID, D extends AbstractDO<ID>> {
 
     private String getDomainCacheKey(ID id) {
         return this.domainClass.getSimpleName()+"::"+id;
+    }
+
+    public List<D> findByConditions(String whereSql, SqlParam sqlParam) {
+        return jdbcDAO.findListByCondition(domainClass, whereSql, sqlParam);
     }
 }
