@@ -7,9 +7,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class EzRpcResponse extends BaseVO {
+public class EzRpcResponse<T> extends BaseVO {
     private int code;
-    private Object data;
+    private T data;
     private String msg;
 
     private EzRpcResponse () {
@@ -17,19 +17,19 @@ public class EzRpcResponse extends BaseVO {
         this.msg = "";
     }
 
-    public static EzRpcResponse OK (Object data) {
-        EzRpcResponse o = new EzRpcResponse();
+    public static <T> EzRpcResponse<T> OK (T data) {
+        EzRpcResponse<T> o = new EzRpcResponse<>();
         o.data = data;
         return o;
     }
 
-    public static EzRpcResponse ERROR (int code, String msg) {
-        EzRpcResponse o = new EzRpcResponse();
+    public static <T> EzRpcResponse<T> ERROR (int code, String msg) {
+        EzRpcResponse<T> o = new EzRpcResponse<>();
         o.code = code;
         o.msg = msg;
         return o;
     }
-    public static EzRpcResponse ERROR (int code) {
+    public static <T> EzRpcResponse<T> ERROR (int code) {
         return EzRpcResponse.ERROR(code, "ERROR");
     }
 }

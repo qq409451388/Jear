@@ -7,6 +7,10 @@ import java.util.Iterator;
 
 @NoArgsConstructor
 public class EzString {
+    public static boolean isBlank(String s) {
+        return s == null || s.trim().isEmpty();
+    }
+
     public static String join(Collection<String> pieces, String separator) {
         StringBuilder buffer = new StringBuilder();
         for (Iterator<String> iter = pieces.iterator(); iter.hasNext(); ) {

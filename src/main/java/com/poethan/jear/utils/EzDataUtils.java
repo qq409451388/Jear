@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -66,5 +67,25 @@ public class EzDataUtils {
         }catch (NumberFormatException nfe) {
             return false;
         }
+    }
+
+    public static boolean check(Object o) {
+        if (Objects.isNull(o)) {
+            return false;
+        }
+        return o instanceof Long && (Long)o > 0
+                || o instanceof Integer && (Integer)o > 0
+                || o instanceof String && !EzString.isBlank((String) o)
+                || o instanceof List && !((List) o).isEmpty()
+                || o instanceof Map && !((Map) o).isEmpty();
+    }
+
+    public static boolean checkAll(Object ...objs) {
+        for (Object obj : objs) {
+            if (!check(obj)){
+                return false;
+            }
+        }
+        return true;
     }
 }
