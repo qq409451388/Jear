@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -49,6 +50,10 @@ abstract public class BaseDAO<ID, D extends AbstractDO<ID>> {
         domain = this.jdbcDAO.findById(domainClass, id);
         redis.setEx(getDomainCacheKey(id), JsonUtils.encode(domain), 86400);
         return domain;
+    }
+
+    public List<D> findByIds(Collection<ID> ids) {
+        return this.jdbcDAO.findByIds(domainClass, ids);
     }
 
     public boolean update(D domain) {
