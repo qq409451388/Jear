@@ -121,10 +121,6 @@
                 <configuration>
                     <source>17</source>
                     <target>17</target>
-                    <compilerArgs>
-                        <arg>--add-modules</arg>
-                        <arg>java.xml.ws.annotation</arg>
-                    </compilerArgs>
                 </configuration>
             </plugin>
         </plugins>

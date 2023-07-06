@@ -75,4 +75,8 @@ abstract public class BaseDAO<ID, D extends AbstractDO<ID>> {
     public List<D> findByConditions(String whereSql, SqlParam sqlParam) {
         return jdbcDAO.findListByCondition(domainClass, whereSql, sqlParam);
     }
+
+    public D findOne(String whereSql, SqlParam sqlParam) {
+        return jdbcDAO.findByCondition(domainClass, whereSql, sqlParam);
+    }
 }

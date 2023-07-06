@@ -79,7 +79,11 @@ public class JdbcDAO {
             whereSql = whereSql + " ";
             Map<String, Object> map = sqlParam.getData();
             for (Map.Entry<String, Object> entry : map.entrySet()) {
-                whereSql = whereSql.replaceAll(":" + entry.getKey() + " ", entry.getValue().toString() + " ");
+                if (entry.getValue() instanceof String) {
+                    whereSql = whereSql.replaceAll(":" + entry.getKey(), "\""+entry.getValue() + "\"");
+                } else {
+                    whereSql = whereSql.replaceAll(":" + entry.getKey(), entry.getValue().toString());
+                }
             }
             String tableName = tClass.getAnnotation(Table.class).name();
             return jdbcTemplate.queryForObject("select * from " + tableName + " " + whereSql,
