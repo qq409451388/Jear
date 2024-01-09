@@ -1,7 +1,6 @@
 package com.poethan.jear.module.web.tcp;
 
 import com.poethan.jear.utils.EzDataUtils;
-import com.poethan.jear.utils.JsonUtils;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.group.ChannelGroup;
@@ -12,8 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.net.InetSocketAddress;
 
 @Slf4j
-abstract public class SocketHandler<T> extends ChannelInboundHandlerAdapter {
-    public static final ChannelGroup clients = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+public abstract class SocketHandler<T> extends ChannelInboundHandlerAdapter {
+    protected static final ChannelGroup clients = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
     private Class<T> msgDataType;
 
@@ -35,7 +34,7 @@ abstract public class SocketHandler<T> extends ChannelInboundHandlerAdapter {
         this.channelReadTrueType(ctx, data);
     }
 
-    abstract public void channelReadTrueType(ChannelHandlerContext ctx, T msg);
+    public abstract void channelReadTrueType(ChannelHandlerContext ctx, T msg);
 
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {

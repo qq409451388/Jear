@@ -1,8 +1,6 @@
 package com.poethan.jear.module.web.tcp;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -12,6 +10,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.MessageToMessageDecoder;
 import io.netty.handler.codec.MessageToMessageEncoder;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -21,11 +20,13 @@ import org.springframework.stereotype.Component;
  **/
 @Slf4j
 @Component
-public class SocketServer<EN, DE> {
+public class SocketServer<E, D> {
     @Getter
     private ServerBootstrap serverBootstrap;
 
-    private SocketInitializer<EN, DE> socketInitializer;
+    @Setter
+    @Getter
+    private SocketInitializer<E, D> socketInitializer;
 
     /**
      * netty服务监听端口
@@ -44,11 +45,11 @@ public class SocketServer<EN, DE> {
     public void start() {
         try {
             this.init();
+            this.serverBootstrap.bind(this.port);
+            log.info("Netty started on port: {} (TCP) with boss thread {}", this.port, this.bossThread);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Netty start error", e);
         }
-        this.serverBootstrap.bind(this.port);
-        log.info("Netty started on port: {} (TCP) with boss thread {}", this.port, this.bossThread);
     }
 
     /**
@@ -56,7 +57,7 @@ public class SocketServer<EN, DE> {
      */
     private void init() throws Exception {
         SocketChannel channel = new NioSocketChannel();
-        SocketInitializer<EN, DE> socketInitializer = this.getSocketInitializer();
+        this.socketInitializer = this.getSocketInitializer();
         socketInitializer.initChannel(channel);
         // 创建两个线程组，bossGroup为接收请求的线程组，一般1-2个就行
         NioEventLoopGroup bossGroup = new NioEventLoopGroup(this.bossThread);
@@ -68,22 +69,14 @@ public class SocketServer<EN, DE> {
                 .childHandler(socketInitializer); // 加入自己的初始化器
     }
 
-    public SocketInitializer<EN, DE> getSocketInitializer() {
-        return socketInitializer;
-    }
+    public static class SocketInitializer<E, D> extends ChannelInitializer<SocketChannel> {
+        private final Class<? extends MessageToMessageEncoder<E>> encoder;
+        private final Class<? extends MessageToMessageDecoder<D>> decoder;
+        private final Class<? extends SocketHandler<?>> socketHandler;
 
-    public void setSocketInitializer(SocketInitializer<EN, DE> socketInitializer) {
-        this.socketInitializer = socketInitializer;
-    }
-
-    public static class SocketInitializer<EN, DE> extends ChannelInitializer<SocketChannel> {
-        private final Class<? extends MessageToMessageEncoder<EN>> encoder;
-        private final Class<? extends MessageToMessageDecoder<DE>> decoder;
-        private final Class<? extends SocketHandler> socketHandler;
-
-        public SocketInitializer(Class<? extends MessageToMessageEncoder<EN>> encoder,
-                                 Class<? extends MessageToMessageDecoder<DE>> decoder,
-                                 Class<? extends SocketHandler> socketHandler) {
+        public SocketInitializer(Class<? extends MessageToMessageEncoder<E>> encoder,
+                                 Class<? extends MessageToMessageDecoder<D>> decoder,
+                                 Class<? extends SocketHandler<?>> socketHandler) {
             this.encoder = encoder;
             this.decoder = decoder;
             this.socketHandler = socketHandler;
@@ -92,9 +85,9 @@ public class SocketServer<EN, DE> {
         @Override
         protected void initChannel(SocketChannel socketChannel) throws Exception {
             ChannelPipeline pipeline = socketChannel.pipeline();
-            pipeline.addLast(decoder.newInstance());
-            pipeline.addLast(encoder.newInstance());
-            pipeline.addLast(socketHandler.newInstance());
+            pipeline.addLast(decoder.getDeclaredConstructor().newInstance());
+            pipeline.addLast(encoder.getDeclaredConstructor().newInstance());
+            pipeline.addLast(socketHandler.getDeclaredConstructor().newInstance());
         }
     }
 }
