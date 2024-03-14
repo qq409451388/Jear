@@ -1,6 +1,6 @@
 package com.poethan.jear.web.tcp;
 
-import com.poethan.jear.utils.EzDataUtils;
+import com.poethan.jear.core.utils.EzDataUtils;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.group.ChannelGroup;
@@ -12,11 +12,13 @@ import lombok.extern.slf4j.Slf4j;
 public abstract class SocketHandler<T> extends ChannelInboundHandlerAdapter {
     protected static final ChannelGroup clients = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
-    private Class<T> msgDataType;
+    private final Class<T> msgDataType;
 
-    protected void setMsgDataType(Class<T> msgDataType) {
-        this.msgDataType = msgDataType;
+    public SocketHandler() {
+        this.msgDataType = getMsgDataType();
     }
+
+    protected abstract Class<T> getMsgDataType();
 
     /**
      * 读取到客户端发来的消息

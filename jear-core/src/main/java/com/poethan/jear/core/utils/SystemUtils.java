@@ -1,13 +1,12 @@
-package com.poethan.jear.utils;
-
-import lombok.extern.slf4j.Slf4j;
+package com.poethan.jear.core.utils;
 
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Slf4j
+
 public class SystemUtils {
+
     private static final Map<String, Timer> TIMER_MAP = new ConcurrentHashMap<>();
 
     public static String getTraceId(){
@@ -65,7 +64,7 @@ public class SystemUtils {
         try{
             Thread.sleep(millis);
         } catch (Exception e) {
-            log.error("[Gear] {} Sleep Fail!", SystemUtils.class.getSimpleName());
+            //log.error("[Gear] {} Sleep Fail!", SystemUtils.class.getSimpleName());
         }
     }
 

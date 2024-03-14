@@ -1,4 +1,4 @@
-package com.poethan.jear.utils;
+package com.poethan.jear.core.utils;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;

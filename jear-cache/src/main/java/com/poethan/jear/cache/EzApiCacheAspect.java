@@ -1,6 +1,6 @@
 package com.poethan.jear.cache;
 
-import com.poethan.jear.utils.EncodeUtils;
+import com.poethan.jear.core.utils.EncodeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

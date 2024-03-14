@@ -3,9 +3,9 @@ package com.poethan.jear.jdbc;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.poethan.jear.utils.EzDate;
-import com.poethan.jear.utils.EzDateDeserializer;
-import com.poethan.jear.utils.EzDateSerializer;
+import com.poethan.jear.core.utils.EzDate;
+import com.poethan.jear.core.utils.EzDateDeserializer;
+import com.poethan.jear.core.utils.EzDateSerializer;
 import lombok.Getter;
 import lombok.ToString;
 

@@ -1,6 +1,7 @@
 package com.poethan.jear.cache;
 
-import com.poethan.jear.utils.SystemUtils;
+
+import com.poethan.jear.core.utils.SystemUtils;
 
 import java.util.Map;
 import java.util.Objects;

@@ -3,29 +3,21 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.1</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
     <groupId>com.poethan.jear</groupId>
-    <artifactId>Jear</artifactId>
+    <artifactId>jear</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jear.utils.version>1.0-SNAPSHOT</jear.utils.version>
+        <jear.core.version>1.0</jear.core.version>
+        <jear.cache.version>1.0</jear.cache.version>
+        <jear.jdbc.version>1.0</jear.jdbc.version>
+        <jear.web.version>1.0</jear.web.version>
     </properties>
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>com.poethan.jear</groupId>
-                <artifactId>jear-utils</artifactId>
-                <version>1.0</version>
-            </dependency>
             <dependency>
                 <groupId>com.poethan.jear</groupId>
                 <artifactId>jear-core</artifactId>
@@ -37,15 +29,21 @@
                 <version>1.0</version>
             </dependency>
             <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>2.15.1</version>
+                <groupId>com.poethan.jear</groupId>
+                <artifactId>jear-jdbc</artifactId>
+                <version>1.0</version>
             </dependency>
             <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-aop</artifactId>
-                <version>3.0.4</version>
+                <groupId>com.poethan.jear</groupId>
+                <artifactId>jear-web</artifactId>
+                <version>1.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
+    <modules>
+        <module>jear-core</module>
+        <module>jear-cache</module>
+        <module>jear-jdbc</module>
+        <module>jear-web</module>
+    </modules>
 </project>

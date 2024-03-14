@@ -1,7 +1,7 @@
 package com.poethan.jear.jdbc;
 
 import com.poethan.jear.cache.EzRedis;
-import com.poethan.jear.utils.JsonUtils;
+import com.poethan.jear.core.utils.JsonUtils;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;

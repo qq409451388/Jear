@@ -1,4 +1,4 @@
-package com.poethan.jear.utils.annotation;
+package com.poethan.jear.core.anno;
 
 import java.lang.annotation.*;
 @Documented

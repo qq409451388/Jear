@@ -16,7 +16,7 @@ public class SchdulerJobAspect {
     @Autowired
     private List<BaseSchduler> schdulerList;
 
-    @Pointcut(value =  "@annotation(com.poethan.jear.anno.EzSchdulerJob)")
+    @Pointcut(value =  "@annotation(com.poethan.jear.core.anno.EzSchdulerJob)")
     public void jobPointCut(){
     }
 

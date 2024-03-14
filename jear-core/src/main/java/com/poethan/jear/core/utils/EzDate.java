@@ -1,6 +1,4 @@
-package com.poethan.jear.utils;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
+package com.poethan.jear.core.utils;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

@@ -1,0 +1,5 @@
+jear:
+  socket:
+    server:
+      port: 8082
+      boss-thread-count: 10

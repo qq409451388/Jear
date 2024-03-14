@@ -5,9 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.poethan.jear</groupId>
-        <artifactId>Jear</artifactId>
+        <artifactId>jear</artifactId>
         <version>1.0</version>
     </parent>
+    <version>1.0</version>
     <artifactId>jear-jdbc</artifactId>
     <packaging>jar</packaging>
     <properties>
@@ -18,15 +19,11 @@
     <dependencies>
         <dependency>
             <groupId>com.poethan.jear</groupId>
-            <artifactId>jear-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.poethan.jear</groupId>
-            <artifactId>jear-utils</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.poethan.jear</groupId>
             <artifactId>jear-cache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.poethan.jear</groupId>
+            <artifactId>jear-core</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.persistence</groupId>
@@ -47,7 +44,6 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.33</version>
-            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>

@@ -1,6 +1,6 @@
 package com.poethan.jear.web.rmqp;
 
-import com.poethan.jear.utils.SystemUtils;
+import com.poethan.jear.core.utils.SystemUtils;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;

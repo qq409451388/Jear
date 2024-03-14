@@ -1,8 +1,8 @@
 package com.poethan.jear.jdbc;
 
-import com.poethan.jear.utils.EzDataUtils;
-import com.poethan.jear.utils.EzDate;
-import com.poethan.jear.utils.EzString;
+import com.poethan.jear.core.utils.EzDataUtils;
+import com.poethan.jear.core.utils.EzDate;
+import com.poethan.jear.core.utils.EzString;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;

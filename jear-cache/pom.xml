@@ -5,10 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.poethan.jear</groupId>
-        <artifactId>Jear</artifactId>
+        <artifactId>jear</artifactId>
         <version>1.0</version>
     </parent>
+    <!--<groupId>com.poethan.jear</groupId>-->
     <artifactId>jear-cache</artifactId>
+    <version>1.0</version>
     <packaging>jar</packaging>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -16,14 +18,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
-        <dependency>
-            <groupId>com.poethan.jear</groupId>
-            <artifactId>jear-utils</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.poethan.jear</groupId>
-            <artifactId>jear-core</artifactId>
-        </dependency>
         <dependency>
             <groupId>com.sun.org.apache.xml.internal</groupId>
             <artifactId>resolver</artifactId>
@@ -33,6 +27,10 @@
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
             <version>5.0.0-alpha2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.poethan.jear</groupId>
+            <artifactId>jear-core</artifactId>
         </dependency>
     </dependencies>
 </project>

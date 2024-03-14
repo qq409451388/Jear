@@ -11,11 +11,11 @@ import java.util.Map;
 @Configuration
 public class NettySocketConfiguration {
 
-    @Bean
+/*    @Bean
     public Map<String, Object> getScoketConfig() {
         Map<String, Object> mapConfig = new HashMap<>();
         mapConfig.put("DECODER", new ByteArrayDecoder());
         mapConfig.put("ENCODER", new ByteArrayEncoder());
         return mapConfig;
-    }
+    }*/
 }

@@ -1,7 +1,7 @@
 package com.poethan.jear.cache;
 
 import com.poethan.jear.core.dto.BaseDTO;
-import com.poethan.jear.utils.SystemUtils;
+import com.poethan.jear.core.utils.SystemUtils;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

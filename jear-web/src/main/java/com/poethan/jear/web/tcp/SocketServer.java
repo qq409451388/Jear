@@ -12,14 +12,13 @@ import io.netty.handler.codec.MessageToMessageEncoder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+
+import java.util.Objects;
 
 /**
  * @author Gjing
  **/
 @Slf4j
-@Component
 public class SocketServer<E, D> {
     @Getter
     private ServerBootstrap serverBootstrap;
@@ -28,16 +27,19 @@ public class SocketServer<E, D> {
     @Getter
     private SocketInitializer<E, D> socketInitializer;
 
-    /**
-     * netty服务监听端口
-     */
-    @Value("${netty.port:8088}")
-    private int port;
-    /**
-     * 主线程组数量
-     */
-    @Value("${netty.bossThread:1}")
-    private int bossThread;
+    private final int port;
+
+    private final int bossThread;
+
+    public SocketServer(SocketServerConfigure configure) {
+        if (Objects.isNull(configure)) {
+            configure = new SocketServerConfigure();
+            configure.setPort(8888);
+            configure.setBossThreadCount(1);
+        }
+        this.port = configure.getPort();
+        this.bossThread = configure.getBossThreadCount();
+    }
 
     /**
      * 启动netty服务器

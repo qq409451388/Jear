@@ -39,8 +39,7 @@ public class EzRedis {
         poolConfig.setMaxIdle(maxIdle);
         poolConfig.setMaxTotal(maxTotal);
         poolConfig.setMaxWait(Duration.ofMillis(1000));
-        JedisPool jedisPool = new JedisPool(poolConfig, host, port);
-        try {
+        try (JedisPool jedisPool = new JedisPool(poolConfig, host, port)) {
             jedis = jedisPool.getResource();
         } catch (Exception e) {
             e.printStackTrace();
@@ -48,7 +47,6 @@ public class EzRedis {
             if (jedis != null) {
                 jedis.close();
             }
-
         }
     }
 

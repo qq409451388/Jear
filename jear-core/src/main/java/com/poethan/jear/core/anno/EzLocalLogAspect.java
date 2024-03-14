@@ -1,7 +1,7 @@
-package com.poethan.jear.utils.annotation;
+package com.poethan.jear.core.anno;
 
-import com.poethan.jear.utils.JsonUtils;
-import com.poethan.jear.utils.SystemUtils;
+import com.poethan.jear.core.utils.JsonUtils;
+import com.poethan.jear.core.utils.SystemUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -18,7 +18,7 @@ import java.lang.reflect.Method;
 @Order(1)
 @Component
 public class EzLocalLogAspect {
-    @Pointcut("@annotation(com.poethan.jear.utils.annotation.EzLocalLog)")
+    @Pointcut("@annotation(com.poethan.jear.core.anno.EzLocalLog)")
     public void doPointCut(){}
 
     @Around("doPointCut()")

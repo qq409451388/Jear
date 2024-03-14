@@ -1,4 +1,4 @@
-package com.poethan.jear.utils;
+package com.poethan.jear.core.utils;
 
 
 import java.nio.charset.StandardCharsets;
